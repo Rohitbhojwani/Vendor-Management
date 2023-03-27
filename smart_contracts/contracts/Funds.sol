@@ -211,4 +211,34 @@ contract Funds {
         return trans;
     }
 
+    function getAllGovernmentTrancations() public view returns (Transactions[] memory) {
+
+        uint count=transactions.length;
+        uint n=0;
+
+        for(uint i = 0; i < count; i++) {
+            if(transactions[i].from == msg.sender){
+                n=n+1;
+            }
+            else if(transactions[i].to == msg.sender){
+                n=n+1;
+            }
+        }
+
+        Transactions[] memory trans = new Transactions[](n);
+        uint it=0;
+        for(uint i = 0; i < count; i++) {
+            if(transactions[i].from == msg.sender){
+                trans[it]=transactions[i];
+                it=it+1;
+            }
+            else if(transactions[i].to == msg.sender){
+                trans[it]=transactions[i];
+                it=it+1;
+            }
+        }
+
+        return trans;
+    }
+
 }
