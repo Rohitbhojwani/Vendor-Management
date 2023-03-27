@@ -240,5 +240,4 @@ contract Funds {
 
         return trans;
     }
-
 }
