@@ -8,6 +8,7 @@ contract Funds {
     address public central;
     uint public balance;
     uint public spend;
+    uint transactionCount;
 
     struct Allocated{
         uint amount;
@@ -40,6 +41,7 @@ contract Funds {
         central = msg.sender;
         balance=0;
         spend=0;
+        transactionCount=0;
         gov.push(Government(msg.sender,"Central","Central",0,0));
     }
 
@@ -82,6 +84,10 @@ contract Funds {
         return spend;
     }
 
+    function getTransactionCount() public view returns (uint) {
+        return transactionCount;
+    }
+
     function AddFunds(uint _amount) public {
         gov[0].balance=balance+_amount;
         alloc.push(Allocated(_amount,block.timestamp));
@@ -106,18 +112,8 @@ contract Funds {
         return true;
     }
 
-    function Register(string memory _govtype,string memory _name) public {
-        // uint n=gov.length;
-        // for(uint i=0;i<n;i++){
-        //     if(keccak256(abi.encodePacked(gov[i].name)) == keccak256(abi.encodePacked(_name))){
-        //         return false;
-        //     }
-        //     if(msg.sender==gov[i].add){
-        //         return false;
-        //     }
-        // }
-        gov.push(Government(msg.sender,_govtype,_name,0,0));
-        //return true;
+    function Register(address _add,string memory _govtype,string memory _name) public {
+        gov.push(Government(_add,_govtype,_name,0,0));
     }
 
     function AllocateFunds(uint _amount, string memory _to, string memory _project) public {
@@ -136,6 +132,7 @@ contract Funds {
         gov[0].balance=balance;
         gov[0].spend=spend;
         transactions.push(Transactions(central,gov[ind].add,"Central",_to,block.timestamp,_amount,_project));
+        transactionCount=transactionCount+1;
     }
 
     function TransferFunds(uint _amount, string memory _to, string memory _project) public {
@@ -161,6 +158,7 @@ contract Funds {
         gov[ind_from].spend=gov[ind_from].spend+_amount;
 
         transactions.push(Transactions(msg.sender,gov[ind_to].add,gov[ind_from].name,_to,block.timestamp,_amount,_project));
+        transactionCount=transactionCount+1;
     }
 
     function getAllTrancations() public view returns (Transactions[] memory) {
