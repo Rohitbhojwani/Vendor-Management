@@ -18,9 +18,9 @@ const createEthereumContract = () => {
 export const TransactionsProvider = ({ children }) => {
   ///////// Input Datas
   const [formData1, setformData1] = useState({ address: "", govtype: "", name: ""});
-  const [addFundsForm, setAddFundsForm] = useState({ amount: 0});
-  const [formData2, setformData2] = useState({ amount:0, to:"", project:""});
+  const [formData2, setformData2] = useState({ amount: 0});
   const [formData3, setformData3] = useState({ amount:0, to:"", project:""});
+  const [formData4, setformData4] = useState({ amount:0, to:"", project:""});
 
   ///////////////////
   const [currentAccount, setCurrentAccount] = useState("");
@@ -42,15 +42,15 @@ export const TransactionsProvider = ({ children }) => {
   };
 
   const handleChange2 = (e, name) => {
-    setAddFundsForm((prevState) => ({ ...prevState, [name]: e.target.value }));
+    setformData2((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
   const handleChange3 = (e, name) => {
-    setformData2((prevState) => ({ ...prevState, [name]: e.target.value }));
+    setformData3((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
   const handleChange4 = (e, name) => {
-    setformData2((prevState) => ({ ...prevState, [name]: e.target.value }));
+    setformData4((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
 
@@ -173,6 +173,18 @@ export const TransactionsProvider = ({ children }) => {
   /////////////////////////////////////////////////////////////////////
   /////// Funds Functions
   /////////////////////////////////////////////////////////////////////
+  // centralLogin,
+  // governmentLogin,
+  // GovernmentDetails,
+  // getBalance,
+  // getSpend,
+  // AddFunds,
+  // getAddedFunds,
+  // CheckRegisterGovernment,
+  // RegisterGovernment,
+  // AllocateFunds,
+  // TransferFunds,
+  // getAllGovernmentTrancations
   const centralLogin = async () => {
     try {
       if (ethereum) {
@@ -475,7 +487,7 @@ export const TransactionsProvider = ({ children }) => {
         handleChange4,
         /////////
         formData1,
-        addFundsForm,
+        formData4,
         formData3,
         formData2,
         //////////
@@ -484,8 +496,24 @@ export const TransactionsProvider = ({ children }) => {
         govDetails,
         allocFunds,
         balance,
-        spend
-
+        spend,
+        alreadyGov,
+        //////////
+        getAllTransactions,
+        checkIfWalletIsConnect,
+        checkIfTransactionsExists,
+        centralLogin,
+        governmentLogin,
+        GovernmentDetails,
+        getBalance,
+        getSpend,
+        AddFunds,
+        getAddedFunds,
+        CheckRegisterGovernment,
+        RegisterGovernment,
+        AllocateFunds,
+        TransferFunds,
+        getAllGovernmentTrancations
       }}
     >
       {children}
